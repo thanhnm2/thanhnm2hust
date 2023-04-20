@@ -1,0 +1,315 @@
+{
+	"openapi": "3.0.3",
+	"info": {
+		"title": "Game Management",
+		"description": "Game Management Swagger Document",
+		"version": "0.0.1"
+	},
+	"host": "localhost:3001",
+	"basePath": "/",
+	"tags": [
+		{
+			"name": "Users",
+			"description": "API cho module quản lý người dùng"
+		},
+		{
+			"name": "Auth",
+			"description": "API authen"
+		}
+	],
+	"schemes": [
+		"http"
+	],
+	"consumes": [
+		"application/json"
+	],
+	"produces": [
+		"application/json"
+	],
+	"paths": {
+		"/auth/login": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Đăng nhập",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/definitions/loginParams"
+							}
+						}
+					}
+				},
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Đăng nhập thành công"
+					}
+				}
+			}
+		},
+		"/auth/logout": {
+			"put": {
+				"tags": [
+					"Auth"
+				],
+				"parameters": [
+					{
+						"name": "token",
+						"in": "query",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"summary": "Đăng xuất",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Thành công"
+					}
+				}
+			}
+		},
+		"/auth/signup": {
+			"post": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Đăng ký",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/definitions/createUser"
+							}
+						}
+					}
+				},
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Đăng ký thành công"
+					}
+				}
+			}
+		},
+		"/auth/info": {
+			"get": {
+				"tags": [
+					"Auth"
+				],
+				"summary": "Lấy thông tin người dùng đang đăng nhập",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "query",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Thành công"
+					}
+				}
+			}
+		},
+		"/user/list": {
+			"get": {
+				"tags": [
+					"Users"
+				],
+				"summary": "Lấy danh sách người dùng",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "query",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Thành công"
+					}
+				}
+			}
+		},
+		"/user/update/{id}": {
+			"put": {
+				"summary": "Cập nhật thông tin",
+				"tags": [
+					"Users"
+				],
+				"parameters": [
+					{
+						"name": "token",
+						"in": "query",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/definitions/updateUser"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Thành công"
+					}
+				}
+			}
+		},
+		"/user/delete/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"type": "integer"
+				},
+				{
+					"name": "token",
+					"in": "query",
+					"required": true,
+					"type": "string"
+				}
+			],
+			"delete": {
+				"summary": "Xóa người dùng",
+				"tags": [
+					"Users"
+				],
+				"responses": {
+					"200": {
+						"description": "Thành công"
+					}
+				}
+			}
+		},
+		"/user/change-password": {
+			"put": {
+				"summary": "Đổi mật khẩu",
+				"tags": [
+					"Users"
+				],
+				"parameters": [
+					{
+						"name": "token",
+						"in": "query",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/definitions/changePasswordParams"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Thành công"
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"createUser": {
+			"required": [
+				"username",
+				"password",
+				"email"
+			],
+			"properties": {
+				"username": {
+					"type": "string"
+				},
+				"password": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				}
+			}
+		},
+		"updateUser": {
+			"properties": {
+				"username": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"avatar": {
+					"type": "string"
+				}
+			}
+		},
+		"loginParams": {
+			"required": [
+				"username",
+				"password",
+				"uuid"
+			],
+			"properties": {
+				"username": {
+					"type": "string"
+				},
+				"password": {
+					"type": "string"
+				},
+				"uuid": {
+					"type": "string"
+				}
+			}
+		},
+		"changePasswordParams": {
+			"required": [
+				"new_password"
+			],
+			"properties": {
+				"new_password": {
+					"type": "string"
+				}
+			}
+		},
+		"tokenParams": {
+			"required": [
+				"token"
+			],
+			"properties": {
+				"token": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

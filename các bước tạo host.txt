@@ -1,0 +1,4 @@
+các bước tạo host:
+B1: chạy lệnh pm2 start src/index.js
+B2: chạy lệnh lt --port 3001
+B3: copy link đc tạo từ câu lệnh ở b2, thêm "/api-docs" vào link vào mở trên trình duyệt web
